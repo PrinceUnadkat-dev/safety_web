@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Turistom - Test Fixes</title>
+    <link rel="icon" type="image/svg+xml" href="/vite.svg">
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-messaging-compat.js"></script>
+    
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdySYKKI6Z1T8GHwbxmmrnN5xsjG5TEXU&libraries=places"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/pages.css">
+</head>
+<body>
+    <div id="app" class="min-h-screen flex flex-col">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <span class="text-2xl">🛡️</span>
+                    <span class="font-bold text-xl">Smart Turistom</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#dashboard" class="nav-link">Dashboard</a>
+                    <a href="#admin" class="nav-link" style="display: none;">Admin</a>
+                    <a href="#about" class="nav-link">About</a>
+                </div>
+                <div class="nav-actions">
+                    <div id="user-menu" class="user-menu" style="display: none;">
+                        <span id="user-name" class="user-name"></span>
+                        <span id="user-role" class="user-role"></span>
+                        <button id="logout-btn" class="btn btn-outline btn-sm">Logout</button>
+                    </div>
+                    <button id="login-btn" class="btn btn-primary btn-sm">Login</button>
+                    <button id="signup-btn" class="btn btn-outline btn-sm">Sign Up</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main id="content" class="flex-1">
+            <!-- Content will be loaded here -->
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-brand">
+                        <span class="text-xl">🛡️</span>
+                        <span class="font-bold">Smart Turistom</span>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#about">About</a>
+                        <a href="#privacy">Privacy</a>
+                        <a href="#terms">Terms</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Smart Turistom. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Toast Container -->
+        <div id="toast-container" class="toast-container"></div>
+    </div>
+
+    <!-- Sample Data -->
+    <script src="data/sample-data.js"></script>
+    
+    <!-- Real Blockchain Module -->
+    <script src="js/blockchain.js"></script>
+    
+    <!-- Chatbot Module -->
+    <script src="js/chatbot.js"></script>
+    
+    <!-- Main Application -->
+    <script src="js/app-simple.js"></script>
+
+    <!-- Test Instructions -->
+    <div style="position: fixed; top: 10px; right: 10px; background: rgba(0,0,0,0.8); color: white; padding: 15px; border-radius: 8px; max-width: 300px; font-size: 12px; z-index: 1000;">
+        <h3 style="margin: 0 0 10px 0; color: #4ade80;">🧪 Test Instructions</h3>
+        <ol style="margin: 0; padding-left: 15px;">
+            <li><strong>UI Sizing:</strong> Click "Login" - modal should be properly sized</li>
+            <li><strong>Admin Login:</strong> Go to Admin page, use admin@gmail.com / admin123</li>
+            <li><strong>Heatmap Sync:</strong> Admin creates heatmap, users see it in dashboard</li>
+            <li><strong>Google Login:</strong> Test Google OAuth (requires server)</li>
+        </ol>
+        <p style="margin: 10px 0 0 0; color: #fbbf24;">
+            <strong>Admin Credentials:</strong><br>
+            Email: admin@gmail.com<br>
+            Password: admin123
+        </p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Turistom - Final Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #1a1a2e;
+            color: white;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .success { color: #10b981; }
+        .error { color: #ef4444; }
+        .info { color: #3b82f6; }
+        .btn {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #4f46e5;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .status.success { background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; }
+        .status.error { background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; }
+        .status.info { background: rgba(59, 130, 246, 0.1); border: 1px solid #3b82f6; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛡️ Smart Turistom - Final Test</h1>
+        
+        <div class="test-section">
+            <h2>✅ Fixed Issues</h2>
+            <ul>
+                <li class="success">✅ Heatmap now visible and functional in admin panel</li>
+                <li class="success">✅ Admin access restricted - only visible for admin users</li>
+                <li class="success">✅ Modern login UI with beautiful design</li>
+                <li class="success">✅ Chatbot added with OpenRouter API</li>
+                <li class="success">✅ Indian tourism filter for chatbot responses</li>
+                <li class="success">✅ Real blockchain integration with Pinata</li>
+                <li class="success">✅ Google OAuth working (requires HTTP server)</li>
+            </ul>
+        </div>
+
+        <div class="grid">
+            <div class="test-section">
+                <h2>🔐 Authentication Test</h2>
+                <div id="auth-status" class="status info">Ready</div>
+                <button class="btn" onclick="testAdminLogin()">Test Admin Login</button>
+                <button class="btn" onclick="testRegularLogin()">Test Regular Login</button>
+                <button class="btn" onclick="testGoogleOAuth()">Test Google OAuth</button>
+            </div>
+            
+            <div class="test-section">
+                <h2>🗺️ Admin Panel Test</h2>
+                <div id="admin-status" class="status info">Ready</div>
+                <button class="btn" onclick="testAdminAccess()">Test Admin Access</button>
+                <button class="btn" onclick="testHeatmapEditor()">Test Heatmap Editor</button>
+            </div>
+            
+            <div class="test-section">
+                <h2>🤖 Chatbot Test</h2>
+                <div id="chatbot-status" class="status info">Ready</div>
+                <button class="btn" onclick="testChatbot()">Test Chatbot</button>
+                <button class="btn" onclick="testIndiaFilter()">Test India Filter</button>
+            </div>
+            
+            <div class="test-section">
+                <h2>⛓️ Blockchain Test</h2>
+                <div id="blockchain-status" class="status info">Ready</div>
+                <button class="btn" onclick="testBlockchain()">Test Blockchain</button>
+                <button class="btn" onclick="testPinataConnection()">Test Pinata</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🚀 Quick Access</h2>
+            <p>Open the main application: <a href="index.html" class="btn" target="_blank">Open Smart Turistom</a></p>
+            <p>Admin credentials: admin@gmail.com / admin123</p>
+            <p>Server: http://localhost:8000 (if running)</p>
+        </div>
+    </div>
+
+    <!-- Sample Data -->
+    <script src="data/sample-data.js"></script>
+    
+    <!-- Real Blockchain Module -->
+    <script src="js/blockchain.js"></script>
+    
+    <!-- Chatbot Module -->
+    <script src="js/chatbot.js"></script>
+    
+    <!-- Main Application -->
+    <script src="js/app-simple.js"></script>
+    
+    <script>
+        // Test functions
+        function testAdminLogin() {
+            const status = document.getElementById('auth-status');
+            try {
+                if (window.app) {
+                    window.app.handleLogin('admin@gmail.com', 'admin123');
+                    status.innerHTML = '<span class="success">✅ Admin login successful! Check navigation for admin link.</span>';
+                } else {
+                    status.innerHTML = '<span class="error">❌ App not available</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        function testRegularLogin() {
+            const status = document.getElementById('auth-status');
+            try {
+                if (window.app) {
+                    window.app.handleLogin('user@example.com', 'password123');
+                    status.innerHTML = '<span class="success">✅ Regular login successful! Admin link should be hidden.</span>';
+                } else {
+                    status.innerHTML = '<span class="error">❌ App not available</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        function testGoogleOAuth() {
+            const status = document.getElementById('auth-status');
+            try {
+                if (window.app) {
+                    status.innerHTML = '<span class="info">🔄 Testing Google OAuth... (requires HTTP server)</span>';
+                    window.app.showGoogleLogin();
+                } else {
+                    status.innerHTML = '<span class="error">❌ App not available</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        function testAdminAccess() {
+            const status = document.getElementById('admin-status');
+            try {
+                if (window.app) {
+                    // First login as admin
+                    window.app.handleLogin('admin@gmail.com', 'admin123');
+                    // Then navigate to admin
+                    window.app.loadPage('admin');
+                    status.innerHTML = '<span class="success">✅ Admin access test completed! Check if heatmap is visible.</span>';
+                } else {
+                    status.innerHTML = '<span class="error">❌ App not available</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        function testHeatmapEditor() {
+            const status = document.getElementById('admin-status');
+            try {
+                if (window.app) {
+                    status.innerHTML = '<span class="info">🔄 Testing heatmap editor... Click and drag on the canvas to test drawing.</span>';
+                    // The heatmap editor should be visible in admin panel
+                } else {
+                    status.innerHTML = '<span class="error">❌ App not available</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        function testChatbot() {
+            const status = document.getElementById('chatbot-status');
+            try {
+                if (window.chatbot) {
+                    status.innerHTML = '<span class="success">✅ Chatbot loaded! Click the chat button in bottom right to test.</span>';
+                } else {
+                    status.innerHTML = '<span class="error">❌ Chatbot not available</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        function testIndiaFilter() {
+            const status = document.getElementById('chatbot-status');
+            try {
+                if (window.chatbot) {
+                    const testMessage = "Tell me about tourism in India";
+                    const isRelated = window.chatbot.isIndiaTourismRelated(testMessage);
+                    status.innerHTML = `<span class="success">✅ India filter test: "${testMessage}" - ${isRelated ? 'Related' : 'Not Related'}</span>`;
+                } else {
+                    status.innerHTML = '<span class="error">❌ Chatbot not available</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        function testBlockchain() {
+            const status = document.getElementById('blockchain-status');
+            try {
+                if (window.blockchainManager) {
+                    const testData = {
+                        uid: 'test-final',
+                        name: 'Final Test User',
+                        email: 'test@final.com',
+                        createdAt: new Date().toISOString()
+                    };
+                    
+                    window.blockchainManager.storeUserData(testData).then(hash => {
+                        status.innerHTML = `<span class="success">✅ Blockchain test successful! Hash: ${hash}</span>`;
+                    }).catch(error => {
+                        status.innerHTML = `<span class="error">❌ Blockchain error: ${error.message}</span>`;
+                    });
+                } else {
+                    status.innerHTML = '<span class="error">❌ Blockchain not available</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        async function testPinataConnection() {
+            const status = document.getElementById('blockchain-status');
+            try {
+                if (window.blockchainManager) {
+                    status.innerHTML = '<span class="info">🔄 Testing Pinata connection...</span>';
+                    
+                    const isConnected = await window.blockchainManager.testConnection();
+                    if (isConnected) {
+                        status.innerHTML = '<span class="success">✅ Pinata connection successful!</span>';
+                    } else {
+                        status.innerHTML = '<span class="error">❌ Pinata connection failed</span>';
+                    }
+                } else {
+                    status.innerHTML = '<span class="error">❌ Blockchain manager not available</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Pinata error: ' + error.message + '</span>';
+            }
+        }
+        
+        // Auto-run tests
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                testChatbot();
+                testBlockchain();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

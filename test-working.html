@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Turistom - Working Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #1a1a2e;
+            color: white;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .success { color: #10b981; }
+        .error { color: #ef4444; }
+        .info { color: #3b82f6; }
+        .btn {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #4f46e5;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Smart Turistom - Working Test Page</h1>
+    
+    <div class="grid">
+        <div class="test-section">
+            <h2>App Status</h2>
+            <div id="app-status">Loading...</div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Sample Data</h2>
+            <div id="sample-data-status">Loading...</div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Blockchain</h2>
+            <div id="blockchain-status">Loading...</div>
+            <button class="btn" onclick="testBlockchain()">Test Blockchain</button>
+        </div>
+        
+        <div class="test-section">
+            <h2>Authentication</h2>
+            <div id="auth-status">Ready</div>
+            <button class="btn" onclick="testLogin()">Test Login</button>
+            <button class="btn" onclick="testAdmin()">Test Admin</button>
+        </div>
+        
+        <div class="test-section">
+            <h2>Google Maps</h2>
+            <div id="maps-status">Ready</div>
+            <button class="btn" onclick="loadMaps()">Load Maps</button>
+        </div>
+        
+        <div class="test-section">
+            <h2>Features</h2>
+            <div id="features-status">Ready</div>
+            <button class="btn" onclick="testSOS()">Test SOS</button>
+            <button class="btn" onclick="testHeatmap()">Test Heatmap</button>
+        </div>
+    </div>
+
+    <!-- Sample Data -->
+    <script src="data/sample-data.js"></script>
+    
+    <!-- Simple Blockchain Module -->
+    <script src="js/blockchain-simple.js"></script>
+    
+    <!-- Main Application -->
+    <script src="js/app-simple.js"></script>
+    
+    <script>
+        // Test functions
+        function testBlockchain() {
+            const status = document.getElementById('blockchain-status');
+            try {
+                if (window.blockchainManager) {
+                    const testData = {
+                        uid: 'test-user',
+                        name: 'Test User',
+                        email: 'test@example.com',
+                        createdAt: new Date().toISOString()
+                    };
+                    
+                    window.blockchainManager.storeUserData(testData).then(hash => {
+                        status.innerHTML = `
+                            <span class="success">✅ Blockchain working!</span><br>
+                            <span class="info">Hash: ${hash}</span><br>
+                            <span class="info">Total blocks: ${window.blockchainManager.getStats().totalBlocks}</span>
+                        `;
+                    });
+                } else {
+                    status.innerHTML = '<span class="error">❌ Blockchain not available</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        function testLogin() {
+            const status = document.getElementById('auth-status');
+            try {
+                if (window.app) {
+                    window.app.handleLogin('test@example.com', 'password123');
+                    status.innerHTML = '<span class="success">✅ Login test completed</span>';
+                } else {
+                    status.innerHTML = '<span class="error">❌ App not available</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        function testAdmin() {
+            const status = document.getElementById('auth-status');
+            try {
+                if (window.app) {
+                    window.app.handleLogin('admin@gmail.com', 'admin123');
+                    status.innerHTML = '<span class="success">✅ Admin login test completed</span>';
+                } else {
+                    status.innerHTML = '<span class="error">❌ App not available</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        function loadMaps() {
+            const status = document.getElementById('maps-status');
+            try {
+                if (window.app) {
+                    window.app.loadGoogleMaps();
+                    status.innerHTML = '<span class="info">🔄 Loading Google Maps...</span>';
+                } else {
+                    status.innerHTML = '<span class="error">❌ App not available</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        function testSOS() {
+            const status = document.getElementById('features-status');
+            try {
+                if (window.app) {
+                    window.app.triggerSOS();
+                    status.innerHTML = '<span class="success">✅ SOS test completed</span>';
+                } else {
+                    status.innerHTML = '<span class="error">❌ App not available</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        function testHeatmap() {
+            const status = document.getElementById('features-status');
+            try {
+                if (window.app) {
+                    window.app.saveHeatmap();
+                    status.innerHTML = '<span class="success">✅ Heatmap test completed</span>';
+                } else {
+                    status.innerHTML = '<span class="error">❌ App not available</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        // Initialize tests
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                // Test app status
+                const appStatus = document.getElementById('app-status');
+                if (window.app) {
+                    appStatus.innerHTML = '<span class="success">✅ App loaded successfully</span>';
+                } else {
+                    appStatus.innerHTML = '<span class="error">❌ App failed to load</span>';
+                }
+                
+                // Test sample data
+                const sampleStatus = document.getElementById('sample-data-status');
+                if (window.sampleData) {
+                    sampleStatus.innerHTML = `
+                        <span class="success">✅ Sample data loaded</span><br>
+                        <span class="info">Tourists: ${window.sampleData.tourists.length}</span><br>
+                        <span class="info">Alerts: ${window.sampleData.alerts.length}</span>
+                    `;
+                } else {
+                    sampleStatus.innerHTML = '<span class="error">❌ Sample data not loaded</span>';
+                }
+                
+                // Test blockchain
+                const blockchainStatus = document.getElementById('blockchain-status');
+                if (window.blockchainManager) {
+                    blockchainStatus.innerHTML = '<span class="success">✅ Blockchain ready</span>';
+                } else {
+                    blockchainStatus.innerHTML = '<span class="error">❌ Blockchain not available</span>';
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

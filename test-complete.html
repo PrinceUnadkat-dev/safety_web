@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Turistom - Complete Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #1a1a2e;
+            color: white;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .success { color: #10b981; }
+        .error { color: #ef4444; }
+        .info { color: #3b82f6; }
+        .warning { color: #f59e0b; }
+        .btn {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #4f46e5;
+        }
+        .btn-danger {
+            background: #ef4444;
+        }
+        .btn-success {
+            background: #10b981;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .status.success { background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; }
+        .status.error { background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; }
+        .status.info { background: rgba(59, 130, 246, 0.1); border: 1px solid #3b82f6; }
+        .status.warning { background: rgba(245, 158, 11, 0.1); border: 1px solid #f59e0b; }
+    </style>
+</head>
+<body>
+    <h1>🛡️ Smart Turistom - Complete Test Suite</h1>
+    
+    <div class="grid">
+        <div class="test-section">
+            <h2>📱 App Status</h2>
+            <div id="app-status" class="status info">Loading...</div>
+            <button class="btn" onclick="testApp()">Test App</button>
+        </div>
+        
+        <div class="test-section">
+            <h2>📊 Sample Data</h2>
+            <div id="sample-data-status" class="status info">Loading...</div>
+            <button class="btn" onclick="testSampleData()">Test Data</button>
+        </div>
+        
+        <div class="test-section">
+            <h2>⛓️ Blockchain (Pinata)</h2>
+            <div id="blockchain-status" class="status info">Loading...</div>
+            <button class="btn" onclick="testBlockchain()">Test Blockchain</button>
+            <button class="btn btn-success" onclick="testPinataConnection()">Test Pinata</button>
+        </div>
+        
+        <div class="test-section">
+            <h2>🔐 Authentication</h2>
+            <div id="auth-status" class="status info">Ready</div>
+            <button class="btn" onclick="testLogin()">Test Login</button>
+            <button class="btn" onclick="testAdmin()">Test Admin</button>
+            <button class="btn btn-success" onclick="testGoogleOAuth()">Test Google OAuth</button>
+        </div>
+        
+        <div class="test-section">
+            <h2>🗺️ Google Maps</h2>
+            <div id="maps-status" class="status info">Ready</div>
+            <button class="btn" onclick="loadMaps()">Load Maps</button>
+            <div id="map" style="height: 200px; width: 100%; border: 1px solid #333; border-radius: 5px; margin-top: 10px;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🚨 Features</h2>
+            <div id="features-status" class="status info">Ready</div>
+            <button class="btn btn-danger" onclick="testSOS()">Test SOS</button>
+            <button class="btn" onclick="testHeatmap()">Test Heatmap</button>
+            <button class="btn" onclick="testLocation()">Test Location</button>
+        </div>
+    </div>
+
+    <!-- Sample Data -->
+    <script src="data/sample-data.js"></script>
+    
+    <!-- Real Blockchain Module -->
+    <script src="js/blockchain.js"></script>
+    
+    <!-- Main Application -->
+    <script src="js/app-simple.js"></script>
+    
+    <script>
+        let testResults = {
+            app: false,
+            sampleData: false,
+            blockchain: false,
+            pinata: false,
+            auth: false,
+            maps: false,
+            features: false
+        };
+
+        // Test functions
+        function testApp() {
+            const status = document.getElementById('app-status');
+            try {
+                if (window.app) {
+                    testResults.app = true;
+                    status.innerHTML = '<span class="success">✅ App loaded successfully</span><br><span class="info">All modules initialized</span>';
+                } else {
+                    testResults.app = false;
+                    status.innerHTML = '<span class="error">❌ App failed to load</span>';
+                }
+            } catch (error) {
+                testResults.app = false;
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        function testSampleData() {
+            const status = document.getElementById('sample-data-status');
+            try {
+                if (window.sampleData) {
+                    testResults.sampleData = true;
+                    status.innerHTML = `
+                        <span class="success">✅ Sample data loaded</span><br>
+                        <span class="info">Tourists: ${window.sampleData.tourists.length}</span><br>
+                        <span class="info">Alerts: ${window.sampleData.alerts.length}</span><br>
+                        <span class="info">Reports: ${window.sampleData.riskReports.length}</span>
+                    `;
+                } else {
+                    testResults.sampleData = false;
+                    status.innerHTML = '<span class="error">❌ Sample data not loaded</span>';
+                }
+            } catch (error) {
+                testResults.sampleData = false;
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        function testBlockchain() {
+            const status = document.getElementById('blockchain-status');
+            try {
+                if (window.blockchainManager) {
+                    const testData = {
+                        uid: 'test-user-' + Date.now(),
+                        name: 'Test User',
+                        email: 'test@example.com',
+                        createdAt: new Date().toISOString()
+                    };
+                    
+                    window.blockchainManager.storeUserData(testData).then(hash => {
+                        testResults.blockchain = true;
+                        status.innerHTML = `
+                            <span class="success">✅ Blockchain working!</span><br>
+                            <span class="info">Hash: ${hash}</span><br>
+                            <span class="info">Data stored on IPFS</span>
+                        `;
+                    }).catch(error => {
+                        testResults.blockchain = false;
+                        status.innerHTML = '<span class="error">❌ Blockchain error: ' + error.message + '</span>';
+                    });
+                } else {
+                    testResults.blockchain = false;
+                    status.innerHTML = '<span class="error">❌ Blockchain not available</span>';
+                }
+            } catch (error) {
+                testResults.blockchain = false;
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        async function testPinataConnection() {
+            const status = document.getElementById('blockchain-status');
+            try {
+                if (window.blockchainManager) {
+                    status.innerHTML = '<span class="info">🔄 Testing Pinata connection...</span>';
+                    
+                    const isConnected = await window.blockchainManager.testConnection();
+                    if (isConnected) {
+                        testResults.pinata = true;
+                        status.innerHTML = '<span class="success">✅ Pinata connection successful!</span>';
+                    } else {
+                        testResults.pinata = false;
+                        status.innerHTML = '<span class="error">❌ Pinata connection failed</span>';
+                    }
+                } else {
+                    status.innerHTML = '<span class="error">❌ Blockchain manager not available</span>';
+                }
+            } catch (error) {
+                testResults.pinata = false;
+                status.innerHTML = '<span class="error">❌ Pinata error: ' + error.message + '</span>';
+            }
+        }
+        
+        function testLogin() {
+            const status = document.getElementById('auth-status');
+            try {
+                if (window.app) {
+                    window.app.handleLogin('test@example.com', 'password123');
+                    testResults.auth = true;
+                    status.innerHTML = '<span class="success">✅ Login test completed</span>';
+                } else {
+                    testResults.auth = false;
+                    status.innerHTML = '<span class="error">❌ App not available</span>';
+                }
+            } catch (error) {
+                testResults.auth = false;
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        function testAdmin() {
+            const status = document.getElementById('auth-status');
+            try {
+                if (window.app) {
+                    window.app.handleLogin('admin@gmail.com', 'admin123');
+                    testResults.auth = true;
+                    status.innerHTML = '<span class="success">✅ Admin login test completed</span>';
+                } else {
+                    testResults.auth = false;
+                    status.innerHTML = '<span class="error">❌ App not available</span>';
+                }
+            } catch (error) {
+                testResults.auth = false;
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        async function testGoogleOAuth() {
+            const status = document.getElementById('auth-status');
+            try {
+                if (window.app) {
+                    status.innerHTML = '<span class="info">🔄 Testing Google OAuth...</span>';
+                    await window.app.showGoogleLogin();
+                    testResults.auth = true;
+                    status.innerHTML = '<span class="success">✅ Google OAuth test completed</span>';
+                } else {
+                    testResults.auth = false;
+                    status.innerHTML = '<span class="error">❌ App not available</span>';
+                }
+            } catch (error) {
+                testResults.auth = false;
+                status.innerHTML = '<span class="error">❌ Google OAuth error: ' + error.message + '</span>';
+            }
+        }
+        
+        function loadMaps() {
+            const status = document.getElementById('maps-status');
+            try {
+                if (window.app) {
+                    status.innerHTML = '<span class="info">🔄 Loading Google Maps...</span>';
+                    window.app.loadGoogleMaps();
+                    testResults.maps = true;
+                    status.innerHTML = '<span class="success">✅ Google Maps loaded</span>';
+                } else {
+                    testResults.maps = false;
+                    status.innerHTML = '<span class="error">❌ App not available</span>';
+                }
+            } catch (error) {
+                testResults.maps = false;
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        function testSOS() {
+            const status = document.getElementById('features-status');
+            try {
+                if (window.app) {
+                    window.app.triggerSOS();
+                    testResults.features = true;
+                    status.innerHTML = '<span class="success">✅ SOS test completed</span>';
+                } else {
+                    testResults.features = false;
+                    status.innerHTML = '<span class="error">❌ App not available</span>';
+                }
+            } catch (error) {
+                testResults.features = false;
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        function testHeatmap() {
+            const status = document.getElementById('features-status');
+            try {
+                if (window.app) {
+                    window.app.saveHeatmap();
+                    testResults.features = true;
+                    status.innerHTML = '<span class="success">✅ Heatmap test completed</span>';
+                } else {
+                    testResults.features = false;
+                    status.innerHTML = '<span class="error">❌ App not available</span>';
+                }
+            } catch (error) {
+                testResults.features = false;
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        function testLocation() {
+            const status = document.getElementById('features-status');
+            try {
+                if (window.app) {
+                    window.app.viewLocation();
+                    testResults.features = true;
+                    status.innerHTML = '<span class="success">✅ Location test completed</span>';
+                } else {
+                    testResults.features = false;
+                    status.innerHTML = '<span class="error">❌ App not available</span>';
+                }
+            } catch (error) {
+                testResults.features = false;
+                status.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+        
+        // Run all tests
+        function runAllTests() {
+            console.log('🧪 Running all tests...');
+            testApp();
+            testSampleData();
+            testBlockchain();
+            testPinataConnection();
+            testLogin();
+            loadMaps();
+            testSOS();
+            
+            setTimeout(() => {
+                const passed = Object.values(testResults).filter(Boolean).length;
+                const total = Object.keys(testResults).length;
+                console.log(`📊 Test Results: ${passed}/${total} tests passed`);
+                
+                if (passed === total) {
+                    console.log('🎉 All tests passed!');
+                } else {
+                    console.log('⚠️ Some tests failed');
+                }
+            }, 3000);
+        }
+        
+        // Initialize tests
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                runAllTests();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

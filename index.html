@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Turistom - Tourist Safety Platform</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e94560' stroke-width='2'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/%3E%3C/svg%3E">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/pages.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="container">
+                <a href="#home" class="navbar-brand">
+                    <span class="brand-icon">🛡️</span>
+                    <span class="brand-text">Smart Turistom</span>
+                </a>
+                <div class="navbar-links">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#dashboard" class="nav-link">Dashboard</a>
+                    <a href="#admin" class="nav-link">Admin</a>
+                    <a href="#about" class="nav-link">About</a>
+                </div>
+                <div class="navbar-auth">
+                    <button id="login-btn" class="btn btn-primary">Login</button>
+                    <button id="signup-btn" class="btn btn-outline">Sign Up</button>
+                    <div id="user-menu" class="user-menu" style="display: none;">
+                        <div class="user-info">
+                            <span id="user-name" class="user-name"></span>
+                            <span id="user-role" class="user-role"></span>
+                        </div>
+                        <button id="logout-btn" class="btn btn-outline btn-sm">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main id="content">
+            <!-- Content will be loaded here -->
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-brand">
+                        <span class="brand-icon">🛡️</span>
+                        <span class="brand-text">Smart Turistom</span>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#privacy">Privacy Policy</a>
+                        <a href="#terms">Terms of Service</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Smart Turistom. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Toast Container -->
+        <div id="toast-container" class="toast-container"></div>
+    </div>
+
+    <!-- Sample Data -->
+    <script src="data/sample-data.js"></script>
+    
+    <!-- Real Blockchain Module -->
+    <script src="js/blockchain.js"></script>
+    
+    <!-- Chatbot Module -->
+    <script src="js/chatbot.js"></script>
+    
+    <!-- Main Application -->
+    <script src="js/app-simple.js"></script>
+</body>
+</html>

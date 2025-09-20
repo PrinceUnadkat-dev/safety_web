@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Turistom - Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #1a1a2e;
+            color: white;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #333;
+            border-radius: 8px;
+        }
+        .success { color: #22c55e; }
+        .error { color: #ef4444; }
+        .info { color: #3b82f6; }
+    </style>
+</head>
+<body>
+    <h1>Smart Turistom - Test Page</h1>
+    
+    <div class="test-section">
+        <h2>Firebase Test</h2>
+        <div id="firebase-status">Loading...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Google Maps Test</h2>
+        <div id="maps-status">Loading...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Sample Data Test</h2>
+        <div id="sample-data-status">Loading...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Navigation Test</h2>
+        <button onclick="testNavigation()">Test Navigation</button>
+        <div id="navigation-status"></div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdySYKKI6Z1T8GHwbxmmrnN5xsjG5TEXU&libraries=places"></script>
+    
+    <!-- Sample Data -->
+    <script src="data/sample-data.js"></script>
+    
+    <script>
+        // Test Firebase
+        function testFirebase() {
+            const status = document.getElementById('firebase-status');
+            try {
+                if (typeof firebase !== 'undefined') {
+                    const app = firebase.initializeApp({
+                        apiKey: "AIzaSyAdySYKKI6Z1T8GHwbxmmrnN5xsjG5TEXU",
+                        authDomain: "safety-app-5cc2a.firebaseapp.com",
+                        projectId: "safety-app-5cc2a",
+                        storageBucket: "safety-app-5cc2a.firebasestorage.app",
+                        messagingSenderId: "464836479765",
+                        appId: "1:464836479765:web:a3042263a7ded077d2771c",
+                        measurementId: "G-G7BSDX2X5F"
+                    });
+                    status.innerHTML = '<span class="success">✓ Firebase initialized successfully</span>';
+                } else {
+                    status.innerHTML = '<span class="error">✗ Firebase not loaded</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">✗ Firebase error: ' + error.message + '</span>';
+            }
+        }
+        
+        // Test Google Maps
+        function testMaps() {
+            const status = document.getElementById('maps-status');
+            if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
+                status.innerHTML = '<span class="success">✓ Google Maps loaded successfully</span>';
+            } else {
+                status.innerHTML = '<span class="error">✗ Google Maps not loaded</span>';
+            }
+        }
+        
+        // Test Sample Data
+        function testSampleData() {
+            const status = document.getElementById('sample-data-status');
+            if (window.sampleData) {
+                const data = window.sampleData;
+                status.innerHTML = `
+                    <span class="success">✓ Sample data loaded successfully</span><br>
+                    <span class="info">- Tourists: ${data.tourists.length}</span><br>
+                    <span class="info">- Alerts: ${data.alerts.length}</span><br>
+                    <span class="info">- Reports: ${data.riskReports.length}</span><br>
+                    <span class="info">- Heatmap Zones: ${data.heatmapZones.length}</span>
+                `;
+            } else {
+                status.innerHTML = '<span class="error">✗ Sample data not loaded</span>';
+            }
+        }
+        
+        // Test Navigation
+        function testNavigation() {
+            const status = document.getElementById('navigation-status');
+            try {
+                // Test if main app is available
+                if (window.app) {
+                    status.innerHTML = '<span class="success">✓ Main app initialized</span>';
+                } else {
+                    status.innerHTML = '<span class="error">✗ Main app not initialized</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">✗ Navigation error: ' + error.message + '</span>';
+            }
+        }
+        
+        // Run tests when page loads
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                testFirebase();
+                testMaps();
+                testSampleData();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

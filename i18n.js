@@ -1,0 +1,128 @@
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+
+const resources = {
+  en: {
+    translation: {
+      "navHome": "Home",
+      "navAbout": "About",
+      "navContact": "Contact",
+      "navMobileDemo": "Mobile Demo",
+      "navDashboard": "Dashboard",
+      "navAlerts": "Alerts",
+      "navTourists": "Tourists",
+      "navLogin": "Login",
+      "navLogout": "Logout",
+      "navGallery": "Gallery",
+      "navSignUp": "Sign Up",
+      "footerQuickLinks": "Quick Links",
+      "footerContact": "Contact",
+      "footerRights": "© 2024 NE SafeTour. Built with ❤️ for safer tourism in North East India.",
+      "heroTitle": "NE SafeTour",
+      "heroSubtitle": "Revolutionizing tourism safety in North East India through cutting-edge technology",
+      "heroCTA": "View Dashboard Demo",
+      "heroMobileCTA": "Mobile App Demo",
+      "loginPageTitle": "Login to your Account",
+      "loginTitle": "Welcome Back!",
+      "loginSubtitle": "Sign in to access your dashboard",
+      "loginGoogleButton": "Continue with Google",
+      "loginButton": "Login",
+      "loggingIn": "Logging In...",
+      "noAccountPrompt": "Don't have an account?",
+      "signUpNow": "Sign Up",
+      "signUpPageTitle": "Create an Account",
+      "signUpTitle": "Create Your Account",
+      "signUpSubtitle": "Join us to make tourism safer",
+      "signUpButton": "Sign Up",
+      "creatingAccount": "Creating Account...",
+      "alreadyHaveAccountPrompt": "Already have an account?",
+      "loginNow": "Login",
+      "emailLabel": "Email Address",
+      "passwordLabel": "Password",
+      "confirmPasswordLabel": "Confirm Password",
+      "roleSelectionTitle": "Select Your Role",
+      "rolePolice": "Police Department",
+      "roleTourism": "Tourism Department",
+      "roleAdmin": "System Admin",
+      "roleSelectButton": "Proceed to Dashboard",
+      "chatbotToastTitle": "🚧 This feature isn't implemented yet—but don't worry! You can request it in your next prompt! 🚀",
+      "chatbotToastDescription": "Chatbot functionality will be available soon.",
+      "authErrorTitle": "Authentication Error",
+      "auth/invalid-email": "The email address is not valid.",
+      "auth/user-disabled": "This user account has been disabled.",
+      "auth/user-not-found": "No account found with this email.",
+      "auth/wrong-password": "Incorrect password. Please try again.",
+      "auth/email-already-in-use": "This email is already registered.",
+      "auth/weak-password": "Password is too weak. It should be at least 6 characters.",
+      "auth/too-many-requests": "Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later."
+    }
+  },
+  hi: {
+    translation: {
+      "navHome": "होम",
+      "navAbout": "हमारे बारे में",
+      "navContact": "संपर्क",
+      "navMobileDemo": "मोबाइल डेमो",
+      "navDashboard": "डैशबोर्ड",
+      "navAlerts": "अलर्ट",
+      "navTourists": "पर्यटक",
+      "navLogin": "लॉग इन करें",
+      "navLogout": "लॉग आउट",
+      "navGallery": "गेलरी",
+      "navSignUp": "साइन अप करें",
+      "footerQuickLinks": "त्वरित लिंक्स",
+      "footerContact": "संपर्क",
+      "footerRights": "© 2024 एनई सेफ टूर। पूर्वोत्तर भारत में सुरक्षित पर्यटन के लिए ❤️ के साथ बनाया गया।",
+      "heroTitle": "एनई सेफ टूर",
+      "heroSubtitle": "अत्याधुनिक तकनीक के माध्यम से पूर्वोत्तर भारत में पर्यटन सुरक्षा में क्रांति लाना",
+      "heroCTA": "डैशबोर्ड डेमो देखें",
+      "heroMobileCTA": "मोबाइल ऐप डेमो",
+      "loginPageTitle": "अपने खाते में लॉग इन करें",
+      "loginTitle": "वापसी पर स्वागत है!",
+      "loginSubtitle": "अपने डैशबोर्ड तक पहुंचने के लिए साइन इन करें",
+      "loginGoogleButton": "Google के साथ जारी रखें",
+      "loginButton": "लॉग इन करें",
+      "loggingIn": "लॉग इन हो रहा है...",
+      "noAccountPrompt": "क्या आपका खाता नहीं है?",
+      "signUpNow": "साइन अप करें",
+      "signUpPageTitle": "खाता बनाएं",
+      "signUpTitle": "अपना खाता बनाएं",
+      "signUpSubtitle": "पर्यटन को सुरक्षित बनाने के लिए हमसे जुड़ें",
+      "signUpButton": "साइन अप करें",
+      "creatingAccount": "खाता बनाया जा रहा है...",
+      "alreadyHaveAccountPrompt": "पहले से ही एक खाता है?",
+      "loginNow": "अब लॉग इन करें",
+      "emailLabel": "ईमेल पता",
+      "passwordLabel": "पासवर्ड",
+      "confirmPasswordLabel": "पासवर्ड की पुष्टि करें",
+      "roleSelectionTitle": "अपनी भूमिका चुनें",
+      "rolePolice": "पुलिस विभाग",
+      "roleTourism": "पर्यटन विभाग",
+      "roleAdmin": "सिस्टम एडमिन",
+      "roleSelectButton": "डैशबोर्ड पर आगे बढ़ें",
+      "chatbotToastTitle": "🚧 यह सुविधा अभी तक लागू नहीं हुई है—लेकिन चिंता न करें! आप इसे अपने अगले प्रॉम्प्ट में अनुरोध कर सकते हैं! 🚀",
+      "chatbotToastDescription": "चैटबॉट कार्यक्षमता जल्द ही उपलब्ध होगी।",
+      "authErrorTitle": "प्रमाणीकरण त्रुटि",
+      "auth/invalid-email": "यह ईमेल पता मान्य नहीं है।",
+      "auth/user-disabled": "यह उपयोगकर्ता खाता अक्षम कर दिया गया है।",
+      "auth/user-not-found": "इस ईमेल से कोई खाता नहीं मिला।",
+      "auth/wrong-password": "गलत पासवर्ड। कृपया पुन: प्रयास करें।",
+      "auth/email-already-in-use": "यह ईमेल पहले से पंजीकृत है।",
+      "auth/weak-password": "पासवर्ड बहुत कमजोर है। यह कम से कम 6 अक्षर का होना चाहिए।",
+      "auth/too-many-requests": "कई असफल लॉगिन प्रयासों के कारण इस खाते तक पहुंच अस्थायी रूप से अक्षम कर दी गई है। आप अपना पासवर्ड रीसेट करके इसे तुरंत बहाल कर सकते हैं या आप बाद में फिर से प्रयास कर सकते हैं।"
+    }
+  }
+};
+
+i18n
+  .use(initReactI18next)
+  .init({
+    resources,
+    lng: 'en',
+    fallbackLng: 'en',
+    interpolation: {
+      escapeValue: false
+    }
+  });
+
+export default i18n;

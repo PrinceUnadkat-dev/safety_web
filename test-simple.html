@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Turistom - Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #1a1a2e;
+            color: white;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .success { color: #10b981; }
+        .error { color: #ef4444; }
+        .info { color: #3b82f6; }
+        .btn {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #4f46e5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Smart Turistom - Test Page</h1>
+    
+    <div class="test-section">
+        <h2>Firebase Test</h2>
+        <div id="firebase-status">Loading...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Google Maps Test</h2>
+        <div id="maps-status">Loading...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Sample Data Test</h2>
+        <div id="sample-data-status">Loading...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Authentication Test</h2>
+        <button class="btn" onclick="testGoogleLogin()">Test Google Login</button>
+        <button class="btn" onclick="testAdminLogin()">Test Admin Login</button>
+        <div id="auth-status"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Blockchain Test</h2>
+        <button class="btn" onclick="testBlockchain()">Test Blockchain Storage</button>
+        <div id="blockchain-status"></div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdySYKKI6Z1T8GHwbxmmrnN5xsjG5TEXU&libraries=places" async defer></script>
+    
+    <!-- Sample Data -->
+    <script src="data/sample-data.js"></script>
+    
+    <!-- Firebase Config -->
+    <script src="js/firebase-config.js"></script>
+    
+    <!-- Auth Module -->
+    <script src="js/auth.js"></script>
+    
+    <!-- Blockchain Module -->
+    <script src="js/blockchain.js"></script>
+    
+    <script>
+        // Test Firebase
+        function testFirebase() {
+            const status = document.getElementById('firebase-status');
+            try {
+                if (typeof firebase !== 'undefined') {
+                    const app = firebase.initializeApp({
+                        apiKey: "AIzaSyAdySYKKI6Z1T8GHwbxmmrnN5xsjG5TEXU",
+                        authDomain: "safety-app-5cc2a.firebaseapp.com",
+                        projectId: "safety-app-5cc2a",
+                        storageBucket: "safety-app-5cc2a.firebasestorage.app",
+                        messagingSenderId: "464836479765",
+                        appId: "1:464836479765:web:a3042263a7ded077d2771c",
+                        measurementId: "G-G7BSDX2X5F"
+                    });
+                    status.innerHTML = '<span class="success">✅ Firebase initialized successfully</span>';
+                } else {
+                    status.innerHTML = '<span class="error">❌ Firebase not loaded</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Firebase error: ' + error.message + '</span>';
+            }
+        }
+        
+        // Test Google Maps
+        function testMaps() {
+            const status = document.getElementById('maps-status');
+            if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
+                status.innerHTML = '<span class="success">✅ Google Maps loaded successfully</span>';
+            } else {
+                status.innerHTML = '<span class="error">❌ Google Maps not loaded</span>';
+            }
+        }
+        
+        // Test Sample Data
+        function testSampleData() {
+            const status = document.getElementById('sample-data-status');
+            if (window.sampleData) {
+                const data = window.sampleData;
+                status.innerHTML = `
+                    <span class="success">✅ Sample data loaded successfully</span><br>
+                    <span class="info">- Tourists: ${data.tourists.length}</span><br>
+                    <span class="info">- Alerts: ${data.alerts.length}</span><br>
+                    <span class="info">- Reports: ${data.riskReports.length}</span><br>
+                    <span class="info">- Heatmap Zones: ${data.heatmapZones.length}</span>
+                `;
+            } else {
+                status.innerHTML = '<span class="error">❌ Sample data not loaded</span>';
+            }
+        }
+        
+        // Test Google Login
+        async function testGoogleLogin() {
+            const status = document.getElementById('auth-status');
+            try {
+                if (window.authManager) {
+                    status.innerHTML = '<span class="info">🔄 Testing Google login...</span>';
+                    await window.authManager.signInWithGoogle();
+                    status.innerHTML = '<span class="success">✅ Google login successful!</span>';
+                } else {
+                    status.innerHTML = '<span class="error">❌ Auth manager not available</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Google login failed: ' + error.message + '</span>';
+            }
+        }
+        
+        // Test Admin Login
+        async function testAdminLogin() {
+            const status = document.getElementById('auth-status');
+            try {
+                if (window.authManager) {
+                    status.innerHTML = '<span class="info">🔄 Testing admin login...</span>';
+                    const result = await window.authManager.adminLogin('admin@gmail.com', 'admin123');
+                    if (result) {
+                        status.innerHTML = '<span class="success">✅ Admin login successful!</span>';
+                    } else {
+                        status.innerHTML = '<span class="error">❌ Admin login failed</span>';
+                    }
+                } else {
+                    status.innerHTML = '<span class="error">❌ Auth manager not available</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Admin login failed: ' + error.message + '</span>';
+            }
+        }
+        
+        // Test Blockchain
+        async function testBlockchain() {
+            const status = document.getElementById('blockchain-status');
+            try {
+                if (window.blockchainManager) {
+                    status.innerHTML = '<span class="info">🔄 Testing blockchain storage...</span>';
+                    const testData = {
+                        uid: 'test-user',
+                        name: 'Test User',
+                        email: 'test@example.com',
+                        createdAt: new Date().toISOString()
+                    };
+                    const hash = await window.blockchainManager.storeUserData(testData);
+                    status.innerHTML = '<span class="success">✅ Blockchain storage successful! Hash: ' + hash + '</span>';
+                } else {
+                    status.innerHTML = '<span class="error">❌ Blockchain manager not available</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Blockchain storage failed: ' + error.message + '</span>';
+            }
+        }
+        
+        // Run tests when page loads
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                testFirebase();
+                testMaps();
+                testSampleData();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
